@@ -1,18 +1,20 @@
-package com.gjiazhe.layoutswitch;
+package com.sc.demo.layoutswitch;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gjiazhe.layoutswitch.ItemAdapter.SPAN_COUNT_ONE;
-import static com.gjiazhe.layoutswitch.ItemAdapter.SPAN_COUNT_THREE;
+import static com.sc.demo.layoutswitch.ItemAdapter.SPAN_COUNT_ONE;
+import static com.sc.demo.layoutswitch.ItemAdapter.SPAN_COUNT_THREE;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
         initItemsData();
 
+        long duration = 1200;
+
         gridLayoutManager = new GridLayoutManager(this, SPAN_COUNT_ONE);
         itemAdapter = new ItemAdapter(items, gridLayoutManager);
         recyclerView = findViewById(R.id.rv);
         recyclerView.setAdapter(itemAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setItemAnimator(new LayoutSwitchItemAnimator());
     }
 
     private void initItemsData() {

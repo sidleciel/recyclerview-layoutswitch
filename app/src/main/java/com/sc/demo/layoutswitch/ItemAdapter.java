@@ -1,14 +1,17 @@
-package com.gjiazhe.layoutswitch;
+package com.sc.demo.layoutswitch;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sc.demo.layoutswitch.holder.ListViewHolder;
+
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter {
     public static final int SPAN_COUNT_ONE   = 1;
     public static final int SPAN_COUNT_THREE = 3;
 
@@ -41,30 +44,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         if (viewType == VIEW_TYPE_LIST) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
+            return new ListViewHolder(view);
         } else if (viewType == VIEW_TYPE_GRID) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_grid, parent, false);
+            return new ListViewHolder(view);
         } else if (viewType == VIEW_TYPE_LIST_BIG) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_big, parent, false);
+            return new ListViewHolder(view);
         }
-        return new ItemViewHolder(view);
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
     }
 
     @Override
     public int getItemCount() {
         return 30;
-    }
-
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        ItemViewHolder(View itemView) {
-            super(itemView);
-        }
     }
 }
