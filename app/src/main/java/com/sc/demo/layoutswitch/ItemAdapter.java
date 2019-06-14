@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sc.demo.layoutswitch.holder.GridViewHolder;
+import com.sc.demo.layoutswitch.holder.ListBigViewHolder;
 import com.sc.demo.layoutswitch.holder.ListViewHolder;
 
 import java.util.List;
@@ -51,10 +53,10 @@ public class ItemAdapter extends RecyclerView.Adapter {
             return new ListViewHolder(view);
         } else if (viewType == VIEW_TYPE_GRID) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_grid, parent, false);
-            return new ListViewHolder(view);
+            return new GridViewHolder(view);
         } else if (viewType == VIEW_TYPE_LIST_BIG) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_big, parent, false);
-            return new ListViewHolder(view);
+            return new ListBigViewHolder(view);
         }
         return null;
     }
