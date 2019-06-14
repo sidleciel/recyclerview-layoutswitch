@@ -37,7 +37,7 @@ public class LayoutSwitchItemAnimator extends BaseItemAnimator {
                 }
             }).start();
 
-            float scale = 1.f * newView.getMeasuredWidth() / view.getMeasuredWidth();Math.max(1.f * newView.getMeasuredWidth() / view.getMeasuredWidth(), 1.f * newView.getMeasuredHeight() / view.getMeasuredHeight());
+            float scale = Math.max(1.f * newView.getMeasuredWidth() / view.getMeasuredWidth(), 1.f * newView.getMeasuredHeight() / view.getMeasuredHeight());
             ScaleAnimation scaleAnimation = new ScaleAnimation(1.f, scale, 1.f, scale);
             scaleAnimation.setDuration(getChangeDuration());
             view.startAnimation(scaleAnimation);
