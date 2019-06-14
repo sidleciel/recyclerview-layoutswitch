@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseItemAnimator extends SimpleItemAnimator {
-    private static final boolean DEBUG = false;
+    private static final   boolean DEBUG = false;
+    protected static final String  TAG   = BaseItemAnimator.class.getCanonicalName();
 
     private static TimeInterpolator sDefaultInterpolator;
 
@@ -176,6 +178,7 @@ public class BaseItemAnimator extends SimpleItemAnimator {
     }
 
     protected void animateRemoveImpl(final RecyclerView.ViewHolder holder) {
+        Log.e(TAG, "animateRemoveImpl");
         final View view = holder.itemView;
         final ViewPropertyAnimator animation = view.animate();
         mRemoveAnimations.add(holder);
@@ -206,6 +209,7 @@ public class BaseItemAnimator extends SimpleItemAnimator {
     }
 
     protected void animateAddImpl(final RecyclerView.ViewHolder holder) {
+        Log.e(TAG, "animateAddImpl");
         final View view = holder.itemView;
         final ViewPropertyAnimator animation = view.animate();
         mAddAnimations.add(holder);
@@ -255,6 +259,7 @@ public class BaseItemAnimator extends SimpleItemAnimator {
     }
 
     protected void animateMoveImpl(final RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
+        Log.e(TAG, "animateMoveImpl");
         final View view = holder.itemView;
         final int deltaX = toX - fromX;
         final int deltaY = toY - fromY;
@@ -325,6 +330,7 @@ public class BaseItemAnimator extends SimpleItemAnimator {
     }
 
     protected void animateChangeImpl(final ChangeInfo changeInfo) {
+        Log.e(TAG, "animateChangeImpl");
         final RecyclerView.ViewHolder holder = changeInfo.oldHolder;
         final View view = holder == null ? null : holder.itemView;
         final RecyclerView.ViewHolder newHolder = changeInfo.newHolder;

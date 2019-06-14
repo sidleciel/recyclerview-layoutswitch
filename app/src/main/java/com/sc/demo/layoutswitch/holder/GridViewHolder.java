@@ -8,7 +8,7 @@ import android.view.View;
 import com.sc.demo.layoutswitch.R;
 
 public class GridViewHolder extends RecyclerView.ViewHolder {
-    private final ConstraintLayout constraintLayout;
+    public  ConstraintLayout constraintLayout;
 
     public GridViewHolder(@NonNull View itemView) {
         super(itemView);

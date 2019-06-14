@@ -1,6 +1,7 @@
 package com.sc.demo.layoutswitch;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 
 import java.util.ArrayList;
@@ -36,11 +38,17 @@ public class MainActivity extends AppCompatActivity {
         long duration = 1200;
 
         gridLayoutManager = new GridLayoutManager(this, SPAN_COUNT_ONE);
+        gridLayoutManager.setAutoMeasureEnabled(true);
         itemAdapter = new ItemAdapter(items, gridLayoutManager);
         recyclerView = findViewById(R.id.rv);
         recyclerView.setAdapter(itemAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setItemAnimator(new LayoutSwitchItemAnimator());
+
+//        recyclerView.getItemAnimator().setRemoveDuration(duration);
+//        recyclerView.getItemAnimator().setMoveDuration(duration);
+//        recyclerView.getItemAnimator().setAddDuration(duration);
+        recyclerView.getItemAnimator().setChangeDuration(duration);
     }
 
     private void initItemsData() {

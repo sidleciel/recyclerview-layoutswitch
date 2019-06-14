@@ -5,73 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.animation.ScaleAnimation;
 
 public class LayoutSwitchItemAnimator extends BaseItemAnimator {
-    @Override
-    protected void animateRemoveImpl(final RecyclerView.ViewHolder holder) {
-        final View view = holder.itemView;
-        final ViewPropertyAnimator animation = view.animate();
-        mRemoveAnimations.add(holder);
-        animation.setDuration(getRemoveDuration()).alpha(0).setListener(
-                new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-                        dispatchRemoveStarting(holder);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        animation.setListener(null);
-                        view.setAlpha(1);
-                        dispatchRemoveFinished(holder);
-                        mRemoveAnimations.remove(holder);
-                        dispatchFinishedWhenDone();
-                    }
-                }).start();
-    }
-
-    @Override
-    protected void animateMoveImpl(final RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
-        final View view = holder.itemView;
-        final int deltaX = toX - fromX;
-        final int deltaY = toY - fromY;
-        if (deltaX != 0) {
-            view.animate().translationX(0);
-        }
-        if (deltaY != 0) {
-            view.animate().translationY(0);
-        }
-        // TODO: make EndActions end listeners instead, since end actions aren't called when
-        // vpas are canceled (and can't end them. why?)
-        // need listener functionality in VPACompat for this. Ick.
-        final ViewPropertyAnimator animation = view.animate();
-        mMoveAnimations.add(holder);
-        animation.setDuration(getMoveDuration()).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-                dispatchMoveStarting(holder);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-                if (deltaX != 0) {
-                    view.setTranslationX(0);
-                }
-                if (deltaY != 0) {
-                    view.setTranslationY(0);
-                }
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                animation.setListener(null);
-                dispatchMoveFinished(holder);
-                mMoveAnimations.remove(holder);
-                dispatchFinishedWhenDone();
-            }
-        }).start();
-    }
-
     @Override
     protected void animateChangeImpl(final BaseItemAnimator.ChangeInfo changeInfo) {
         final RecyclerView.ViewHolder holder = changeInfo.oldHolder;
@@ -100,6 +36,11 @@ public class LayoutSwitchItemAnimator extends BaseItemAnimator {
                     dispatchFinishedWhenDone();
                 }
             }).start();
+
+            float scale = 1.f * newView.getMeasuredWidth() / view.getMeasuredWidth();Math.max(1.f * newView.getMeasuredWidth() / view.getMeasuredWidth(), 1.f * newView.getMeasuredHeight() / view.getMeasuredHeight());
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1.f, scale, 1.f, scale);
+            scaleAnimation.setDuration(getChangeDuration());
+            view.startAnimation(scaleAnimation);
         }
         if (newView != null) {
             final ViewPropertyAnimator newViewAnimation = newView.animate();

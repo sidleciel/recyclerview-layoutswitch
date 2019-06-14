@@ -9,7 +9,7 @@ import com.sc.demo.layoutswitch.R;
 
 public class ListBigViewHolder extends RecyclerView.ViewHolder {
 
-    private final ConstraintLayout constraintLayout;
+    public  ConstraintLayout constraintLayout;
 
     public ListBigViewHolder(@NonNull View itemView) {
         super(itemView);
