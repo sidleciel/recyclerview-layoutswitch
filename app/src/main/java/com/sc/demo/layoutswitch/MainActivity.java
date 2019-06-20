@@ -1,16 +1,25 @@
 package com.sc.demo.layoutswitch;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
+import android.view.ViewGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.ChangeBounds;
+import androidx.transition.Explode;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionListenerAdapter;
+import androidx.transition.TransitionManager;
+import androidx.transition.TransitionSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +29,7 @@ import static com.sc.demo.layoutswitch.ItemAdapter.SPAN_COUNT_THREE;
 
 
 public class MainActivity extends AppCompatActivity {
+    long duration = 12000;
 
     private RecyclerView      recyclerView;
     private ItemAdapter       itemAdapter;
@@ -35,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         initItemsData();
 
-        long duration = 1200;
 
         gridLayoutManager = new GridLayoutManager(this, SPAN_COUNT_ONE);
         gridLayoutManager.setAutoMeasureEnabled(true);
@@ -43,12 +52,43 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv);
         recyclerView.setAdapter(itemAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setItemAnimator(new LayoutSwitchItemAnimator());
+        recyclerView.setItemAnimator(new LayoutSwitchItemAnimator(gridLayoutManager));
 
 //        recyclerView.getItemAnimator().setRemoveDuration(duration);
-//        recyclerView.getItemAnimator().setMoveDuration(duration);
+        recyclerView.getItemAnimator().setMoveDuration(duration);
 //        recyclerView.getItemAnimator().setAddDuration(duration);
         recyclerView.getItemAnimator().setChangeDuration(duration);
+
+        testChangeBound();
+        final Explode explode = new Explode();
+        TransitionSet set = new TransitionSet()
+                .addTransition(explode)
+                .addTransition(new Fade());
+        TransitionManager.beginDelayedTransition(recyclerView, set);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    void testChangeBound() {
+        final ViewGroup container = findViewById(R.id.container);
+        final View text = findViewById(R.id.text);
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100.f, v.getResources().getDisplayMetrics());
+
+                TransitionSet set = new TransitionSet().addTransition(new ChangeBounds()).setDuration(1000);
+                TransitionManager.beginDelayedTransition(container, set);
+                ViewGroup.LayoutParams params = text.getLayoutParams();
+                if (params.width == d) {
+                    params.width = d * 2;
+                    params.height = d * 2;
+                } else {
+                    params.width = d;
+                    params.height = d;
+                }
+                text.setLayoutParams(params);
+            }
+        });
     }
 
     private void initItemsData() {
@@ -77,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             itemAdapter.setListType(3);
             gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
             itemAdapter.notifyItemRangeChanged(0, itemAdapter.getItemCount());
+
             return true;
         }
         return super.onOptionsItemSelected(item);

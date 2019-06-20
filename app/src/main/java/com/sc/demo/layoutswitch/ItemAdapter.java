@@ -1,11 +1,12 @@
 package com.sc.demo.layoutswitch;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sc.demo.layoutswitch.holder.GridViewHolder;
 import com.sc.demo.layoutswitch.holder.ListBigViewHolder;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter {
     public static final int SPAN_COUNT_ONE   = 1;
-    public static final int SPAN_COUNT_THREE = 3;
+    public static final int SPAN_COUNT_THREE = 2;
 
     private static final int VIEW_TYPE_LIST     = 1;
     private static final int VIEW_TYPE_GRID     = 2;
@@ -63,7 +64,11 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
+        int viewType = getItemViewType(i);
+        if (viewType == VIEW_TYPE_LIST) {
+        } else if (viewType == VIEW_TYPE_GRID) {
+        } else if (viewType == VIEW_TYPE_LIST_BIG) {
+        }
     }
 
     @Override
