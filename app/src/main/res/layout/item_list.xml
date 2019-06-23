@@ -8,12 +8,11 @@
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/main"
         android:layout_width="@dimen/list_icon_w"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="3dp"
         android:layout_marginLeft="@dimen/icon_padding"
-        android:layout_marginRight="@dimen/icon_padding"
         android:layout_marginTop="@dimen/icon_padding"
         android:layout_marginBottom="@dimen/icon_padding"
         android:background="#F7F8F8"
@@ -64,8 +63,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/main"
+        app:layout_constraintTop_toTopOf="@+id/main"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
@@ -85,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:text="$5.99"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/main"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

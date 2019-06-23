@@ -14,10 +14,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.ChangeBounds;
-import androidx.transition.Explode;
-import androidx.transition.Fade;
-import androidx.transition.Transition;
-import androidx.transition.TransitionListenerAdapter;
 import androidx.transition.TransitionManager;
 import androidx.transition.TransitionSet;
 
@@ -25,16 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sc.demo.layoutswitch.ItemAdapter.SPAN_COUNT_ONE;
-import static com.sc.demo.layoutswitch.ItemAdapter.SPAN_COUNT_THREE;
+import static com.sc.demo.layoutswitch.ItemAdapter.SPAN_COUNT_TWO;
 
 
 public class MainActivity extends AppCompatActivity {
     long duration = 12000;
 
-    private RecyclerView      recyclerView;
-    private ItemAdapter       itemAdapter;
+    private RecyclerView recyclerView;
+    private ItemAdapter itemAdapter;
     private GridLayoutManager gridLayoutManager;
-    private List<Item>        items;
+    private List<Item> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
         initItemsData();
 
 
-        gridLayoutManager = new GridLayoutManager(this, SPAN_COUNT_ONE);
+        gridLayoutManager = new GridLayoutManager(this, SPAN_COUNT_TWO);
         gridLayoutManager.setAutoMeasureEnabled(true);
         itemAdapter = new ItemAdapter(items, gridLayoutManager);
         recyclerView = findViewById(R.id.rv);
         recyclerView.setAdapter(itemAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setItemAnimator(new LayoutSwitchItemAnimator(gridLayoutManager));
+//        recyclerView.setItemAnimator(new LayoutSwitchItemAnimator(gridLayoutManager));
 
 //        recyclerView.getItemAnimator().setRemoveDuration(duration);
         recyclerView.getItemAnimator().setMoveDuration(duration);
@@ -60,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.getItemAnimator().setChangeDuration(duration);
 
         testChangeBound();
-        final Explode explode = new Explode();
-        TransitionSet set = new TransitionSet()
-                .addTransition(explode)
-                .addTransition(new Fade());
-        TransitionManager.beginDelayedTransition(recyclerView, set);
+//        final Explode explode = new Explode();
+//        TransitionSet set = new TransitionSet()
+//                .addTransition(explode)
+//                .addTransition(new Fade());
+//        TransitionManager.beginDelayedTransition(recyclerView, set);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -106,16 +102,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.list) {
             itemAdapter.setListType(1);
-            gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
             itemAdapter.notifyItemRangeChanged(0, itemAdapter.getItemCount());
             return true;
         } else if (item.getItemId() == R.id.grid) {
-            gridLayoutManager.setSpanCount(SPAN_COUNT_THREE);
+            itemAdapter.setListType(2);
             itemAdapter.notifyItemRangeChanged(0, itemAdapter.getItemCount());
             return true;
         } else if (item.getItemId() == R.id.listBig) {
             itemAdapter.setListType(3);
-            gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
             itemAdapter.notifyItemRangeChanged(0, itemAdapter.getItemCount());
 
             return true;

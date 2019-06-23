@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/main"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/icon_padding"
@@ -99,7 +99,7 @@
         android:layout_marginBottom="8dp"
         android:text="Classic Buttery Jack"
         android:textColor="#000"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4" />
 
